@@ -1,0 +1,17 @@
+:root {
+  --bg-dark:#09090A;
+  --select-button: #8B5CF6;
+  --bg-checkbox: #18181b;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
