@@ -1,9 +1,11 @@
+import { PropsWithChildren } from 'react'
 import './styles.scss'
 
-export function ContainerAddHabit ({children}: any) {
-  return (
-    <div className='addHabit'>
-      {children}
-    </div>
-  )
+interface IProps {
+  children?: PropsWithChildren | any
+  isMenuActive?: string
+}
+
+export function ContainerAddHabit({ children, isMenuActive }: IProps) {
+  return <div className={`addHabit ${isMenuActive}`}>{children}</div>
 }

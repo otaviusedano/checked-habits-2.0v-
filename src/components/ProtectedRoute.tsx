@@ -1,14 +1,20 @@
-import { Navigate } from 'react-router-dom';
-import { UserAuth } from '../context/authProvider';
+import {
+  PropsWithChildren,
+  ReactElement,
+  ValidationMap,
+  WeakValidationMap,
+} from 'react'
+import { Navigate } from 'react-router-dom'
+import { UserAuth } from '../context/authProvider'
 
-export const ProtectedRoute = ({ children }:any) => {
-  const { user }: any = UserAuth();
-
-  console.log(user);
+export const ProtectedRoute = ({
+  children,
+}: PropsWithChildren | JSX.Element | any) => {
+  const { user }: any = UserAuth()
 
   if (!user) {
-    return <Navigate to='/signIn' />;
+    return <Navigate to="/signIn" />
   }
 
-  return children;
-};
+  return children
+}

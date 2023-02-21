@@ -1,9 +1,6 @@
+import { PropsWithChildren } from 'react'
 import './styles.scss'
 
-export function ContainerDay ({children}: any) {
-  return (
-    <div className='day'>
-      {children}
-    </div>
-  )
+export function ContainerDay({ children }: PropsWithChildren) {
+  return <div className="day">{children}</div>
 }

@@ -2,4 +2,12 @@
   background-color: var(--bg-dark);
   min-height: 100vmin;
   min-width: 100vmin;
+  overflow: hidden;
 }
+
+@media (max-width: 1040px) {
+  .page {
+    min-height: 100vh;
+  }
+}
+

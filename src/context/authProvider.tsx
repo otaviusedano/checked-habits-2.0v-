@@ -1,12 +1,24 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth'
-import { createContext, useContext, useEffect, useState } from 'react'
-import { setDoc, doc } from 'firebase/firestore';
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  UserMetadata,
+} from 'firebase/auth'
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
+import { setDoc, doc } from 'firebase/firestore'
 
 import { auth, db } from '../services/firebase'
 
 export const AuthContext = createContext({})
 
-export function AuthProvider({children}: any) {
+export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState(null)
   const [msgError, setMsgError] = useState('')
   let isEmailExist = false
@@ -19,15 +31,16 @@ export function AuthProvider({children}: any) {
     })
   }
 
-  const createUser = async (user: string,email: string, password: string) => {
-
-    return createUserWithEmailAndPassword(auth, email, password).then(async cred => {
-      await setDoc(doc(db, "users", cred.user.uid), {
-        name: user,
-        email: email,
-        pwd: password
+  const createUser = async (user: string, email: string, password: string) => {
+    return createUserWithEmailAndPassword(auth, email, password)
+      .then(async (cred) => {
+        await setDoc(doc(db, 'users', cred.user.uid), {
+          name: user,
+          email: email,
+          pwd: password,
+        })
       })
-    }).catch((e) => isEmailExist === true)
+      .catch(() => isEmailExist === true)
   }
 
   const logout = () => {
@@ -43,7 +56,18 @@ export function AuthProvider({children}: any) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{auth, signIn, logout, user, createUser, isEmailExist, msgError, isUserExist}}>
+    <AuthContext.Provider
+      value={{
+        auth,
+        signIn,
+        logout,
+        user,
+        createUser,
+        isEmailExist,
+        msgError,
+        isUserExist,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )
@@ -52,4 +76,3 @@ export function AuthProvider({children}: any) {
 export const UserAuth = () => {
   return useContext(AuthContext)
 }
-

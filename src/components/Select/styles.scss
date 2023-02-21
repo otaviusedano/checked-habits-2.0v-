@@ -12,3 +12,12 @@ select {
     display: none;
   }
 }
+
+
+@media (max-width: 1040px) {
+  select {
+    display: none;
+    padding: 6px;
+    font-size: 6px;
+  }
+}

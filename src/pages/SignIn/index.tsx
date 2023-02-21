@@ -1,65 +1,66 @@
-import { useEffect, useState } from 'react';
-import { Link, useLocation, Navigate } from 'react-router-dom'
+import { useEffect, useState } from "react";
+import { Link, useLocation, Navigate } from "react-router-dom";
 
-import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
-import CssBaseline from '@mui/material/CssBaseline'
-import TextField from '@mui/material/TextField'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-import Typography from '@mui/material/Typography'
-import Container from '@mui/material/Container'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { FormHelperText } from '@mui/material'
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { FormHelperText } from "@mui/material";
 
-import { UserAuth } from "../../context/authProvider"
+import { UserAuth } from "../../context/authProvider";
 
-import { EMAIL_REGEX, PWD_REGEX } from '../../services/regex'
-import { Copyright } from "../../components/Copyright"
+import { EMAIL_REGEX, PWD_REGEX } from "../../services/regex";
+import { Copyright } from "../../components/Copyright";
 
+import "./styles.scss";
 
-import './styles.scss'
-
-const theme = createTheme()
+const theme = createTheme();
 
 export default function SignIn() {
-
-  const { signIn, user, msgError, isUserExist }: any = UserAuth()
-  const location = useLocation()
-  const from = location.state?.from?.pathname || "/"
+  const { signIn, user, msgError, isUserExist }: any = UserAuth();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    const emailValue = data.get('email')
-    const pwdValue = data.get('password')
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const emailValue = data.get("email");
+    const pwdValue = data.get("password");
 
-    await signIn(emailValue, pwdValue)
-  }
+    await signIn(emailValue, pwdValue);
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-      {user && (
-        <Navigate to={from} />
-      )}
+        {user && <Navigate to={from} />}
         <CssBaseline />
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -81,7 +82,12 @@ export default function SignIn() {
                   id="password"
                   autoComplete="new-password"
                 />
-                <FormHelperText className={!isUserExist ? "invalid" : "valid"} error>{msgError}</FormHelperText>
+                <FormHelperText
+                  className={!isUserExist ? "invalid" : "valid"}
+                  error
+                >
+                  {msgError}
+                </FormHelperText>
               </Grid>
             </Grid>
             <Button
@@ -94,7 +100,7 @@ export default function SignIn() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to='../SignUp'>
+                <Link to="../SignUp">
                   Ainda não tem uma conta? Cadastre-se.
                 </Link>
               </Grid>
@@ -104,5 +110,5 @@ export default function SignIn() {
         <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
-  )
+  );
 }

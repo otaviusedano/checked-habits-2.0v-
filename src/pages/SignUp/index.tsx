@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
-import { Link, Navigate } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import FormHelperText from '@mui/material/FormHelperText/FormHelperText';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useEffect, useState } from 'react'
+import { Link, Navigate } from 'react-router-dom'
+import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
+import CssBaseline from '@mui/material/CssBaseline'
+import TextField from '@mui/material/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Checkbox from '@mui/material/Checkbox'
+import FormHelperText from '@mui/material/FormHelperText/FormHelperText'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import Typography from '@mui/material/Typography'
+import Container from '@mui/material/Container'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-import { UserAuth } from '../../context/authProvider';
-import { Copyright } from '../../components/Copyright';
+import { UserAuth } from '../../context/authProvider'
+import { Copyright } from '../../components/Copyright'
 import { USER_REGEX, EMAIL_REGEX, PWD_REGEX } from '../../services/regex'
 
 import './styles.scss'
@@ -23,37 +23,40 @@ import './styles.scss'
 const theme = createTheme()
 
 export default function SignUp() {
+  const [createdUser, setCreatedUser] = useState<Boolean>()
 
-  const [ createdUser, setCreatedUser ] = useState<Boolean>()
+  const [confirmedTerms, setConfirmedTerms] = useState(false)
 
-  const [ confirmedTerms, setConfirmedTerms ] = useState(false)
+  const [msgError, setMsgError] = useState('')
 
-  const [ msgError, setMsgError ] = useState('')
+  const [user, setUser] = useState('')
+  const [userFocus, setUserFocus] = useState(false)
+  const [validUser, setValidUser] = useState(false)
 
-  const [ user, setUser ] = useState('')
-  const [ userFocus, setUserFocus ] = useState(false)
-  const [ validUser, setValidUser ] = useState(false)
+  const [email, setEmail] = useState('')
+  const [emailFocus, setEmailFocus] = useState(false)
+  const [validEmail, setValidEmail] = useState(false)
 
-  const [ email, setEmail ] = useState('')
-  const [ emailFocus, setEmailFocus ] = useState(false)
-  const [ validEmail, setValidEmail ] = useState(false)
-
-  const [ pwd, setPwd ] = useState('')
-  const [ pwdFocus, setPwdFocus ] = useState(false)
-  const [ validPwd, setValidPwd ] = useState(false)
+  const [pwd, setPwd] = useState('')
+  const [pwdFocus, setPwdFocus] = useState(false)
+  const [validPwd, setValidPwd] = useState(false)
 
   const { createUser, isEmailExist }: any = UserAuth()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    console.log(isEmailExist)
-
-    if (isEmailExist) setMsgError('Email já existente') 
+    if (isEmailExist) setMsgError('Email já existente')
 
     if (!confirmedTerms) setMsgError('Confirme os termos')
 
-    if (validUser && validEmail && validPwd && confirmedTerms && !isEmailExist) {
+    if (
+      validUser &&
+      validEmail &&
+      validPwd &&
+      confirmedTerms &&
+      !isEmailExist
+    ) {
       await createUser(user, email, pwd)
       return setCreatedUser(true)
     } else {
@@ -91,10 +94,13 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          {createdUser && (
-            <Navigate to="/" replace={true} />
-          )}
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          {createdUser && <Navigate to="/" replace={true} />}
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -110,10 +116,17 @@ export default function SignUp() {
                   id="name"
                   label="Nome"
                   autoFocus
-                  aria-invalid={validUser ? "false" : "true"}
+                  aria-invalid={validUser ? 'false' : 'true'}
                   onFocus={() => setUserFocus(!validUser)}
                 />
-                <FormHelperText className={userFocus && user && !validUser ? "invalid" : "valid"} error>Nome Inválido</FormHelperText>
+                <FormHelperText
+                  className={
+                    userFocus && user && !validUser ? 'invalid' : 'valid'
+                  }
+                  error
+                >
+                  Nome Inválido
+                </FormHelperText>
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -123,7 +136,7 @@ export default function SignUp() {
                     setEmail(e.target.value)
                     setEmailFocus(!validEmail)
                   }}
-                  aria-invalid={validEmail ? "false" : "true"}
+                  aria-invalid={validEmail ? 'false' : 'true'}
                   fullWidth
                   id="email"
                   label="Email"
@@ -131,35 +144,57 @@ export default function SignUp() {
                   autoComplete="email"
                   onFocus={() => setEmailFocus(!validEmail)}
                 />
-                <FormHelperText className={emailFocus && email && !validEmail ? "invalid" : "valid"} error>Email Inválido</FormHelperText>
+                <FormHelperText
+                  className={
+                    emailFocus && email && !validEmail ? 'invalid' : 'valid'
+                  }
+                  error
+                >
+                  Email Inválido
+                </FormHelperText>
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   error={pwdFocus ? true : false}
                   required
-                  onChange={(e) =>  {
+                  onChange={(e) => {
                     setPwd(e.target.value)
                     setPwdFocus(!validPwd)
                   }}
-                  aria-invalid={validPwd ? "false" : "true"}
+                  aria-invalid={validPwd ? 'false' : 'true'}
                   fullWidth
                   name="password"
                   label="Senha"
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  onFocus={() => setPwdFocus(!validPwd)} 
+                  onFocus={() => setPwdFocus(!validPwd)}
                 />
-                <FormHelperText className={pwdFocus && pwd && !validPwd ? "invalid" : "valid"} error>Senha Inválido</FormHelperText>
+                <FormHelperText
+                  className={pwdFocus && pwd && !validPwd ? 'invalid' : 'valid'}
+                  error
+                >
+                  Senha Inválido
+                </FormHelperText>
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
                   name="checkBox"
-                  onChange={() => { setConfirmedTerms(!confirmedTerms); !confirmedTerms ? setMsgError('') : '' }}
+                  onChange={() => {
+                    setConfirmedTerms(!confirmedTerms)
+                    !confirmedTerms ? setMsgError('') : ''
+                  }}
                   control={<Checkbox value={confirmedTerms} color="primary" />}
                   label="Eu aceito todos os termos, e também começar a ter bons hábitos a partir de hoje."
                 />
-                <FormHelperText className={!createdUser && !isEmailExist ? "invalid" : "valid"} error>{msgError}</FormHelperText>
+                <FormHelperText
+                  className={
+                    !createdUser && !isEmailExist ? 'invalid' : 'valid'
+                  }
+                  error
+                >
+                  {msgError}
+                </FormHelperText>
               </Grid>
             </Grid>
             <Button
@@ -172,9 +207,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to='../SignIn'>
-                  Já tem uma Conta? Entre Agora.
-                </Link>
+                <Link to="../SignIn">Já tem uma Conta? Entre Agora.</Link>
               </Grid>
             </Grid>
           </Box>

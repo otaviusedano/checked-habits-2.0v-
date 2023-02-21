@@ -1,7 +1,6 @@
+import { PropsWithChildren } from 'react'
 import './styles.scss'
 
-export function Option ({children}: any) {
-  return (
-    <option>{children}</option>
-  )
+export function Option({ children }: PropsWithChildren) {
+  return <option>{children}</option>
 }

@@ -1,9 +1,18 @@
+import { PropsWithChildren, ReactNode } from 'react'
 import './styles.scss'
 
-export function Select ({children, setIconeSelected}: any) {
+interface IProps {
+  children?: PropsWithChildren | any
+  setIconeSelected: (iconeSelected: string) => void
+  isMenuActive?: string
+}
 
+export function Select({ children, setIconeSelected, isMenuActive }: IProps) {
   return (
-    <select onChange={(e) => setIconeSelected(e.target.value)}>
+    <select
+      className={isMenuActive}
+      onChange={(e) => setIconeSelected(e.target.value)}
+    >
       {children}
     </select>
   )

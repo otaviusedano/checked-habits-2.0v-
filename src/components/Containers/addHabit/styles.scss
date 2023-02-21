@@ -2,3 +2,9 @@
   display: flex;
   gap: 12px;
 }
+
+@media (max-width: 1040px) {
+  .addHabit {
+    display: none;
+  }
+}

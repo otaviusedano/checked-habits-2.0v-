@@ -2,4 +2,27 @@
   display: flex;
   gap: 48px;
   margin-left: 32px;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  width: 180vmin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--bg-checkbox);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #a78bfa;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--select-button);
 }

@@ -1,9 +1,6 @@
+import { PropsWithChildren } from 'react'
 import './styles.scss'
 
-export function ContainerHeader ({children}: any) {
-  return (
-    <header>
-      {children}
-    </header>
-  )
+export function ContainerHeader({ children }: PropsWithChildren) {
+  return <header>{children}</header>
 }

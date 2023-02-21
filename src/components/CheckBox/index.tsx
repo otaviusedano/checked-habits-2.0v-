@@ -1,17 +1,18 @@
 import './styles.scss'
 
-export function CheckBox ({onChange, daysCheckeds, today}: any) {
+interface IProps {
+  daysCheckeds: string[]
+  today: string
+  handleUpdateDay: () => Promise<void>
+}
 
-
-  // console.log(daysCheckeds);
-  
+export function CheckBox({ handleUpdateDay, daysCheckeds, today }: IProps) {
   return (
     <input
-      className='checkBox'
-      type='checkbox'
+      className="checkBox"
+      type="checkbox"
       checked={daysCheckeds.indexOf(today) !== -1 ? true : false}
-      onChange={() => onChange()}
-    >
-    </input>
+      onChange={() => handleUpdateDay()}
+    ></input>
   )
 }

@@ -1,16 +1,22 @@
+import { PropsWithChildren } from 'react'
 import './styles.scss'
 
-export function Button ({children, onClick, icone}: any) {
+interface IProps {
+  children?: PropsWithChildren | any
+  onClick: () => void
+  icone?: string
+  isMenuActive?: string
+}
+
+export function Button({ children, onClick, icone, isMenuActive }: IProps) {
   return (
-    <button className='button' data-testid="button" onClick={onClick}>
+    <button
+      className={`button ${isMenuActive}`}
+      data-testid="button"
+      onClick={onClick}
+    >
       {icone ? <img src={icone} alt="icone" /> : ''}
-      {
-        children 
-        ?
-          <span>{children}</span>
-        : 
-          ''
-      }
+      {children ? <span>{children}</span> : ''}
     </button>
   )
 }
